@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Pahlawan Pangan - Lebih Banyak Level</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: linear-gradient(to bottom, #4CAF50, #2196F3); color: white; text-align: center; padding: 20px; animation: fadeBackground 8s infinite; }
+        @keyframes fadeBackground { 0% { background-color: #4CAF50; } 50% { background-color: #2196F3; } 100% { background-color: #4CAF50; } }
+        .container { background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        .character { width: 150px; border-radius: 50%; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        button { background: #FF5722; color: white; padding: 10px 20px; margin: 10px; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+        button:hover { background: #9C27B0; }
+        .level { margin: 20px; font-size: 18px; }
+        .quiz { display: none; background: white; color: black; padding: 10px; margin: 10px auto; width: 80%; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Petualangan Pahlawan Pangan</h1>
+        <img src="https://via.placeholder.com/150?text=Lila+the+Farmer" alt="Lila the Farmer" class="character">
+        <p>Selamat datang, Pahlawan! Lila menjelajahi desa untuk mengatasi food insecurity. Pilih level untuk memulai.</p>
+        
+        <button onclick="mulaiLevel(1)">Level 1: Desa yang Lapar</button>
+        <button onclick="mulaiLevel(2)">Level 2: Tantangan Iklim</button>
+        <button onclick="mulaiLevel(3)">Level 3: Kemiskinan dan Akses Pangan</button>
+        <button onclick="mulaiLevel(4)">Level 4: Aksi Komunitas</button>
+        <button onclick="mulaiLevel(5)">Level 5: Praktik Berkelanjutan</button>
+        
+        <div id="levelContent"></div>
+        <div id="quiz" class="quiz"></div>
+        <p>Your Score: <span id="score">0</span></p>
+    </div>
+
+    <script>
+        let score = 0;
+
+        function mulaiLevel(level) {
+            switch(level) {
+                case 1:
+                    document.getElementById('levelContent').innerHTML = '<p>Di desa ini, orang-orang kekurangan makanan. Pilih aksi: <button onclick="pilihAksi(\'Tanam Sayur\', 1)">Tanam Sayur</button> <button onclick="pilihAksi(\'Beli Makanan\', 1)">Beli Makanan</button></p>';
+                    break;
+                case 2:
+                    document.getElementById('levelContent').innerHTML = '<p>Tantangan: Banjir menghancurkan panen! Pilih solusi: <button onclick="pilihAksi(\'Bangun Dam\', 2)">Bangun Dam</button> <button onclick="pilihAksi(\'Tunggu Hujan\', 2)">Tunggu Hujan</button></p>';
+                    break;
+                case 3:
+                    document.getElementById('levelContent').innerHTML = '<p>Kemiskinan membuat akses pangan sulit. Pilih aksi: <button onclick="pilihAksi(\'Program Bantuan\', 3)">Program Bantuan</button> <button onclick="pilihAksi(\'Tidak Ada Aksi\', 3)">Tidak Ada Aksi</button></p>';
+                    break;
+                case 4:
+                    document.getElementById('levelContent').innerHTML = '<p>Ayo lakukan aksi komunitas! Pilih: <button onclick="pilihAksi(\'Kumpul Masyarakat\', 4)">Kumpul Masyarakat</button> <button onclick="pilihAksi(\'Kerja Sendiri\', 4)">Kerja Sendiri</button></p>';
+                    break;
+                case 5:
+                    document.getElementById('levelContent').innerHTML = '<p>Belajar praktik berkelanjutan. Pilih: <button onclick="pilihAksi(\'Pertanian Organik\', 5)">Pertanian Organik</button> <button onclick="pilihAksi(\'Pupuk Kimia\', 5)">Pupuk Kimia</button></p>';
+                    break;
+            }
+        }
+
+        function pilihAksi(aksi, level) {
+            let benar = false;
+            if ((level == 1 && aksi == 'Tanam Sayur') ||
+                (level == 2 && aksi == 'Bangun Dam') ||
+                (level == 3 && aksi == 'Program Bantuan') ||
+                (level == 4 && aksi == 'Kumpul Masyarakat') ||
+                (level == 5 && aksi == 'Pertanian Organik')) {
+                benar = true;
+                score += 10;
+                document.getElementById('levelContent').innerHTML += '<p>Bagus! ' + getFakta(aksi, level) + '</p>';
+            } else {
+                score -= 5;
+                document.getElementById('levelContent').innerHTML += '<p>Sayang, itu tidak membantu. Coba lagi!</p>';
+            }
+            document.getElementById('score').innerHTML = score;
+            if (benar) tampilkanQuiz(level);
+        }
+
+        function getFakta(aksi, level) {
+            switch(level) {
+                case 1: return 'Fakta: Menanam sayur membantu mengurangi kelaparan di desa.';
+                case 2: return 'Fakta: Bangun dam melindungi panen dari banjir.';
+                case 3: return 'Fakta: Program bantuan mengatasi kemiskinan dan akses pangan.';
+                case 4: return 'Fakta: Aksi komunitas memperkuat distribusi makanan.';
+                case 5: return 'Fakta: Pertanian organik menjaga tanah untuk masa depan.';
+            }
+        }
+
+        function tampilkanQuiz(level) {
+            let pertanyaan = '';
+            if (level == 1) pertanyaan = 'Quiz: Apa manfaat tanam sayur? <button onclick="jawabQuiz(\'Mengurangi Kelaparan\')">Mengurangi Kelaparan</button> <button onclick="jawabQuiz(\'Tidak Ada\')">Tidak Ada</button>';
+            else if (level == 2) pertanyaan = 'Quiz: Apa penyebab banjir? <button onclick="jawabQuiz(\'Perubahan Iklim\')">Perubahan Iklim</button> <button onclick="jawabQuiz(\'Angin Kencang\')">Angin Kencang</button>';
+            else if (level == 3) pertanyaan = 'Quiz: Bagaimana mengatasi kemiskinan? <button onclick="jawabQuiz(\'Program Bantuan\')">Program Bantuan</button> <button onclick="jawabQuiz(\'Tidak Ada\')">Tidak Ada</button>';
+            else if (level == 4) pertanyaan = 'Quiz: Apa pentingnya aksi komunitas? <button onclick="jawabQuiz(\'Bersama-sama\')">Bersama-sama</button> <button onclick="jawabQuiz(\'Sendiri\')">Sendiri</button>';
+            else if (level == 5) pertanyaan = 'Quiz: Mengapa pertanian organik baik? <button onclick="jawabQuiz(\'Ramah Lingkungan\')">Ramah Lingkungan</button> <button onclick="jawabQuiz(\'Mahal\')">Mahal</button>';
+            document.getElementById('quiz').innerHTML = '<p>' + pertanyaan + '</p>';
+            document.getElementById('quiz').style.display = 'block';
+        }
+
+        function jawabQuiz(jawab) {
+            if (['Mengurangi Kelaparan', 'Perubahan Iklim', 'Program Bantuan', 'Bersama-sama', 'Ramah Lingkungan'].includes(jawab)) {
+                score += 5;
+                alert('Benar! +5 poin.');
+            } else {
+                alert('Salah, coba lagi!');
+            }
+            document.getElementById('score').innerHTML = score;
+            document.getElementById('quiz').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
